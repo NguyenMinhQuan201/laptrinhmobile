@@ -41,13 +41,12 @@ export default class DetailsScreen extends Component {
                                       marginLeft:30,
                                   }}
                               />      
-                              
                           </View>
                   </View>
                   <View style={styles.imageContainer}>
                       {/* <Image source={this.state.data.img} */}
-                      <Image source={this.state.data.img}
-                          style={{resizeMode:'contain',flex:1,}}
+                      <Image source={{uri:this.state.data.img}}
+                          style={{resizeMode:'contain',flex:1,height:400,width:400,}}
                       />
                   </View>
                   

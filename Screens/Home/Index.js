@@ -3,10 +3,10 @@ import {View, Text,Image, TouchableOpacity, StyleSheet, FlatList, Dimensions,Tex
 const width =Dimensions.get("screen").width/2-30;
 import products from '../Products/products';
 import products2 from '../Products/products2';
-const productsjson1=require("../Products/products.json")
-const productsjson2=require("../Products/products2.json")
-const productsjson3=require("../Products/products3.json")
-const productsjson4=require("../Products/products4.json")
+let productsjson1=require("../Products/products.json")
+let productsjson2=require("../Products/products2.json")
+let productsjson3=require("../Products/products3.json")
+let productsjson4=require("../Products/products4.json")
 export default class HomeScreen extends Component {
     constructor (props) {
         super(props);
@@ -15,8 +15,8 @@ export default class HomeScreen extends Component {
             this.gotoNotify = this.gotoNotify.bind(this);   
             this.refreshFlatList=this.refreshFlatList.bind(this)  ;
                 this.state = {
-                    data: products}                      
-            
+                    data: productsjson1.products
+                }                      
     }
     gotoDetail(product) {
         console.log(product.img);
@@ -42,14 +42,15 @@ export default class HomeScreen extends Component {
                     <View>                       
                         <View style={{height:120,marginTop:30,alignItems:'center',justifyContent:'center',}}>
                             <Image 
-                                style={{flex:1,resizeMode:'contain'}} 
-                                source={ product.img}
-                            ></Image>                            
+                                style={{flex:1,resizeMode:'contain',height:200,width:100}} 
+                                source={{uri:product.img}}
+                            />
+                                                        
                         </View>
                         <Text style={{fontSize:20,textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>
                             {product.name}
                         </Text>
-                        <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:15}}>
+                        <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:15}}>                            
                             <Text style={{fontSize:15,textAlign:'left',fontWeight:'bold',marginLeft:5}}>
                                 {product.price}
                             </Text>
@@ -86,11 +87,9 @@ export default class HomeScreen extends Component {
                                     }}>
                             <Text style={{paddingLeft:30,fontSize:20,fontWeight:'bold',color:'pink'}}>
                                     Welcome to 
-                                
                             </Text>   
                             <Text style={{paddingLeft:20,fontSize:25,fontWeight:'bold',color:'pink'}}>
-                                    
-                                LipStickShop.com
+                                    LipStickShop.com
                             </Text>        
                             
                             <View style={{flexDirection:'row'}}>
@@ -130,20 +129,21 @@ export default class HomeScreen extends Component {
                 
                 <View style={styles.swip}>
                         <Text style={styles.swiptext}
-                        onPress={()=>this.refreshFlatList(products)}
+                        onPress={()=>this.refreshFlatList(productsjson1.products)}
                         >
-                                product1
+                                Váy
                         </Text>
                         <Text style={styles.swiptext} 
-                        onPress={()=>this.refreshFlatList(products2)}>
-                                product2
+                        onPress={()=>this.refreshFlatList(productsjson2.products)}>
+                                Son
                         </Text>
                         <Text style={styles.swiptext} 
-                        >
-                                product3
+                        onPress={()=>this.refreshFlatList(productsjson3.products)}>
+                                Giày
                         </Text>
-                        <Text style={styles.swiptext} >
-                                product4
+                        <Text style={styles.swiptext} 
+                        onPress={()=>this.refreshFlatList(productsjson4.products)}>
+                                Áo
                         </Text>
                 </View>
                 
@@ -165,14 +165,18 @@ export default class HomeScreen extends Component {
 
 const styles = StyleSheet.create({
     swiptext:{
-        margin:15,
+        marginLeft:30,
+        marginRight:30,
+        fontSize:20,
         color:'white',
+        
     },
     swip:{
         justifyContent:'center',
         backgroundColor:'pink',
         margin:10,
         flexDirection:'row',
+        borderRadius:10,
     },
     Card:{
         backgroundColor:'white',
