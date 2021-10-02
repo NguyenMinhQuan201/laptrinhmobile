@@ -5,6 +5,7 @@ export default class DetailsScreen extends Component {
     constructor (props) {
         super(props);
         this.navigation = props.navigation;
+        this.gotoNotify = this.gotoNotify.bind(this);
         this.state = {
             data: props.route.params,
             cong:0,
@@ -12,10 +13,15 @@ export default class DetailsScreen extends Component {
             dem:0,
         }
     }
+    gotoNotify() {
+    this.navigation.navigate('Notify');
+    }
     computetru(){
+        if(this.state.dem > 0 ){
         const dem=this.state.dem-1
         this.setState({dem:dem});
         console.log(dem);
+        }
     }
     computecong(){
         const dem=this.state.dem+1
@@ -32,16 +38,20 @@ export default class DetailsScreen extends Component {
                                Back
                            </Text>
                       </View>
-                      <View style={{backgroundColor:'grey'}} >
-                              <Image                       
-                                  source={require('../Home/ThongBao_2.png')}
-                                  style={{
-                                      width:50,
-                                      height:50,
-                                      marginLeft:30,
-                                  }}
-                              />      
-                          </View>
+                      <View style={{backgroundColor:'grey'}}>
+                        <Text style={{
+                            width:50,
+                            height:80,
+                            marginLeft:30,
+                            }} onPress={()=>this.gotoNotify()}>
+                        <Image
+                            source={require('../Home/ThongBao_2.png')}
+                            style={{
+                                width:50,
+                                height:50,
+                                marginLeft:30}} />
+                        </Text>
+                      </View>
                   </View>
                   <View style={styles.imageContainer}>
                       {/* <Image source={this.state.data.img} */}
@@ -185,9 +195,10 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },  
     textback:{
-        marginTop:10,
+        marginTop:20,
         fontSize:20,
         fontWeight:'bold',
+
     },
     goback:{
         width:50,
@@ -197,6 +208,7 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         backgroundColor:'grey',
         alignItems:'center',
+        justifyContent: 'center'
     },
     Header:{
         paddingHorizontal:20,

@@ -5,59 +5,128 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  FlatList,
+  Image
 } from 'react-native';
 
+const data = require('./Notify.json');
 export default class Notify extends Component {
   constructor(props) {
     super(props);
-    this.state={
-      weight:'10',
-      height:'10',
-      bmi:0.00,
-      level :'....',
-    }
+    this.navigation = props.navigation;
+    this.backHome = this.backHome.bind(this);
+    this.renderItem = this.renderItem.bind(this);
+    this.state = {
+      data: data.notifies,
+    };
   }
-  compute(){
-    //console.log("press");
-    //console.log(this.state)
-    const{height,weight}=this.state;
-    const n_height=parseFloat(height);
-    const n_weight=parseFloat(weight);
-    console.log(n_height,n_weight);
 
-    const _bmi=n_weight/Math.pow(n_height/100,2);
-    this.setState({bmi:_bmi})
-
-    var _obesity='';
-    if(_bmi>32){
-      _obesity='Obese'
-    }
-    else if(_bmi>25&&_bmi<32){
-      _obesity='Over Weight'
-    }
-    else if(_bmi>18.5&&_bmi<25){
-      _obesity='Normal Weight'
-    }
-    else{
-      _obesity='Under Weight'
-    }
-    this.setState({level :_obesity})
-    console.log(this.state);
+  backHome() {
+    this.navigation.goBack();
   }
+  renderItem({item, index}) {
+    return (
+      <TouchableOpacity style={styles.button}>
+        <View style={styles.posterNotify}>
+          <Image style={{width: 50, height: 50}} source={{uri: item.image}} />
+        </View>
+
+        <View style={styles.titleNotify}>
+          <Text style={styles.textButton}>{item.about}</Text>
+        </View>
+        {/* <View style={styles.viewMore}>
+          <Text style={styles.textViewMore}>{'>'}</Text>
+        </View> */}
+      </TouchableOpacity>
+    );
+  }
+
   render() {
     return (
-      <View>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.headerLeft}>
+            <Text style={{fontSize: 16}} onPress={this.backHome}>
+              Back
+            </Text>
+          </View>
+          <View style={styles.headerCenter}>
+            <Text style={{fontSize: 26}}>Notification</Text>
+          </View>
+          <View style={styles.headerRight}>
 
+          </View>
+        </View>
+        <FlatList
+          style={styles.listNotify}
+          data={this.state.data}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.id}
+        />
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      flexDirection:'column',
-      padding:20,
-    }
-  });
+  container: {
+    flex: 1,
+    //backgroundColor: 'pink'
+    // justifyContent: 'center',
+    // alignItems: 'center'
+  },
+  header: {
+    flexDirection: 'row',
+    backgroundColor: 'pink',
+    height: 80,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20
+    
+    //justifyContent: 'center'
+  },
+  headerLeft: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingLeft: 10,
+    //backgroundColor:'darkblue',
+    borderBottomLeftRadius: 20
+  },
+  headerCenter: {
+    flex: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerRight: {
+    flex: 1
+  },
+
+  button: {
+    //borderWidth: 1,
+    padding: 10,
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 10,
+    flexDirection: 'row',
+  },
+  textButton: {
+    fontSize: 14,
+    //textAlign: 'center',
+  },
+  posterNotify: {
+    flex: 2
+  },
+  titleNotify: {
+    flex: 10,
+  },
+  // viewMore: {
+  //   flex: 1,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  textViewMore: {
+    textAlign: 'center',
+  },
+  listNotify: {
+    //backgroundColor: 'white'
+  },
+});
