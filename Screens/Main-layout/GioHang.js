@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 import {
   StyleSheet,
   Text,
@@ -15,16 +16,26 @@ export default class GioHang extends Component {
     super(props);
     this.navigation = props.navigation;
     this.backHome = this.backHome.bind(this);
+    this.sum = this.sum.bind(this);
     this.renderItem = this.renderItem.bind(this);
     this.state = {
       data: data.carts,
-      id: 0,
+      id: 1,
       cong:0,
       tru:0,
       dem:0,
+      tong: 0,
     };
   }
 
+  sum(){
+    let tong = 0;
+    for (let i = 0; i < this.state.data.length; i++) {
+        tong = tong + (this.state.data[i].price * this.state.data[i].quantity)
+        this.setState({tong:tong});
+        console.log(tong);
+    }
+  }
   computetru(){
     for (let i = 0; i < this.state.data.length; i++) {
       if (this.state.data[i].id === this.state.id) {
@@ -62,7 +73,7 @@ export default class GioHang extends Component {
 
           <View style={styles.quantity}>
             <Text style={styles.textQuantity} onPress={this.computetru.bind(this)}>-</Text>
-            <Text style={styles.textQuantity}>{this.state.dem}</Text>
+            <Text style={styles.textQuantity}>{item.quantity}</Text>
             <Text style={styles.textQuantity} onPress={this.computecong.bind(this)}>+</Text>
           </View>
         </View>
@@ -101,13 +112,30 @@ export default class GioHang extends Component {
           </View>
         </View>
       
-        <FlatList
-          //style={styles.listNotify}
-          data={this.state.data}
-          renderItem={this.renderItem}
-          keyExtractor={item => item.id}
-        />
+        <View style={styles.products}>
+          <FlatList
+            //style={styles.listNotify}
+            data={this.state.data}
+            renderItem={this.renderItem}
+            keyExtractor={item => item.id}
+          />
+        </View>
         
+        <Text style={{fontSize: 20, marginTop:25}}>Totals</Text>
+        <View style={styles.bottom}>
+        
+            <View style={styles.leftBottom}>
+              <Text style={{fontSize: 14}}>Sub total:</Text>
+              <Text style={{fontSize: 14}}>Shipping:</Text>
+            </View> 
+            <View style={styles.rightBottom}>
+              <Text style={{fontSize: 14, paddingLeft: 60}}>{this.state.tong}</Text>
+              <Text style={{fontSize: 14, paddingLeft: 60}}>$0.00</Text>
+              <TouchableOpacity style={styles.button} onPress={this.sum}>
+                <Text>Check Out</Text>
+              </TouchableOpacity>
+            </View>
+        </View>
 
       </View>
     )
@@ -194,7 +222,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between'
   },
+  
   // imgDetele: {
     
   // },
+  products: {
+
+  },
+  bottom: {
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: 5,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  leftBottom: {
+    flex: 1,
+    backgroundColor: 'pink'
+  },
+  rightBottom: {
+    flex: 1,
+    backgroundColor: 'gray',
+   
+  },
 });

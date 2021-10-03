@@ -5,14 +5,16 @@
           "name": "Dress Slate",
           "category": "Váy",
           "image": "https://cf.shopee.vn/file/a8b0e0795ff31efbdc8d9c131e80a70b",
-          "price": "30.45"
+          "price": "30.00",
+          "quantity": "1",
         },
         {
           "id": 2,
           "name": "Dress Dragon Lore",
           "category": "Váy",
           "image": "https://cf.shopee.vn/file/6d4a6595ad4ba152f936c247f912d8e8",
-          "price": "54.21"
+          "price": "50.00",
+          "quantity": "2",
         },
         
     ]
