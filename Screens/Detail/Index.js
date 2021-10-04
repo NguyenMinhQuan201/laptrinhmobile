@@ -13,9 +13,14 @@ export default class DetailsScreen extends Component {
         }
     }
     computetru(){
-        const dem=this.state.dem-1
-        this.setState({dem:dem});
-        console.log(dem);
+        if(this.state.dem==0){
+            this.setState({dem:dem});
+        }
+        else{
+            const dem=this.state.dem-1
+            this.setState({dem:dem});
+            console.log(dem);
+        }
     }
     computecong(){
         const dem=this.state.dem+1

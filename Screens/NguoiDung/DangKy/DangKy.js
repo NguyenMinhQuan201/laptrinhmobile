@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-export default class DangNhap extends Component {
+export default class DangKy extends Component {
     constructor (props) {
             super(props);
             this.navigation = props.navigation;

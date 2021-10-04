@@ -1,18 +1,188 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-const GioHang = ({navigation})=>{
-    return (
-      <View>
-          <Text>
-              Day la gio hang
-          </Text>
-      </View>
-    );
+const width =Dimensions.get("screen").width/2-30;
+import {View, Text,Image, TouchableOpacity, StyleSheet, FlatList, Dimensions,TextInput} from 'react-native';
+let productsjson1=require("../Products/products.json")
+let productsjson2=require("../Products/products2.json")
+let productsjson3=require("../Products/products3.json")
+let productsjson4=require("../Products/products4.json")
+let cartjson=require("../Products/cart.json")
+export default class HomeScreen extends Component {
+  constructor (props) {
+      super(props);
+      this.navigation = props.navigation;
+          this.gotoDetail = this.gotoDetail.bind(this);
+          this.gotoNotify = this.gotoNotify.bind(this);   
+          this.refreshFlatList=this.refreshFlatList.bind(this)  ;
+              this.state = {
+                  data: productsjson1.products
+              }                      
   }
-  export default GioHang;
+  gotoDetail(product) {
+      console.log(product.img);
+      this.navigation.navigate('Detail', product);
+  }
+  gotoNotify() {
+      this.navigation.navigate('Notify');
+  }
+  findout(item){
+      console.log(item);
+  }
+  refreshFlatList(products){
+      console.log(products)
+      this.setState(this.state.data=products)
+  }
+  render() {
+    const Card=({product})=>{
+      return(
+          <TouchableOpacity onPress={() => this.gotoDetail(product)}>
+          <View style={styles.Card}>
+              <View>                       
+                  <View style={{height:120,marginTop:30,alignItems:'center',justifyContent:'center',}}>
+                      <Image 
+                          style={{flex:1,resizeMode:'contain',height:200,width:100}} 
+                          source={{uri:product.img}}
+                      />
+                                                  
+                  </View>
+                  <Text style={{fontSize:20,textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>
+                      {product.name}
+                  </Text>
+                  <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:15}}>                            
+                      <Text style={{fontSize:15,textAlign:'left',fontWeight:'bold',marginLeft:5}}>
+                          {product.price}
+                      </Text>
+                      <View style={{
+                          height:25,
+                          width:25,
+                          backgroundColor:'purple',
+                          borderRadius:5,
+                          justifyContent:'center',
+                          alignItems:'center',
+                          marginRight:10,
+                          
+                      }}>
+                          <Text style={{
+                              fontSize:18,
+                              color:'white',
+                              fontWeight:'bold',
+                              flex:1}}>
+                              +
+                          </Text>
+                      </View>
+                  </View>
+              </View>
+          </View>
+      </TouchableOpacity>
+      );
+  };
+    return(
+      <View style={{height:600}} >
+          <FlatList 
+                        numColumns={2} 
+                        data={this.state.data} 
+                        renderItem={({item})=><Card product={item}/>}
+                        columnWrapperStyle={{justifyContent:'space-between'}}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{
+                        marginTop:10,
+                        paddingBottom:40,                        
+                    }}
+                />
+      </View>
+    )
+  }
+}
+const styles = StyleSheet.create({
+    swiptext:{
+        marginLeft:30,
+        marginRight:30,
+        fontSize:20,
+        color:'white',
+        
+    },
+    swip:{
+        justifyContent:'center',
+        backgroundColor:'pink',
+        margin:10,
+        flexDirection:'row',
+        borderRadius:10,
+    },
+    Card:{
+        backgroundColor:'white',
+        height:225,
+        width,
+        marginHorizontal:2,
+        borderRadius:10,
+        marginBottom:20,
+        marginLeft:10,
+        marginRight:10,
+    },
+    CategorySelected:{
+        color:'pink',
+        paddingBottom:5,
+        borderBottomWidth:2,
+        borderColor:'pink',
+    },
+    categoryText:{
+        fontSize:16,
+        color:'white',
+        fontWeight:'bold',
+    },
+    categoryContainer:{
+        backgroundColor:'purple',
+        flexDirection:'row',
+        marginTop:30,
+        marginBottom:10,
+        marginLeft:10,
+        marginRight:10,
+        justifyContent:'space-between',
+        color:'white'
+    },
+    seachContainer:{
+        height:40,       
+        borderRadius:10,
+        flex:1,
+        flexDirection:'row',
+        alignItems:'center',
+        backgroundColor:'white',
+        marginLeft:10,
+    },
+    inputseach:{
+        fontSize:15,
+        fontWeight:'bold',
+        color:'green',
+        backgroundColor:'white',
+        borderRadius:15,
+        width:230,      
+    },
+    seach:{
+        justifyContent:'space-between',
+    },
+    header:{
+        
+        flexDirection:'row',
+        justifyContent:'space-between',
+        backgroundColor:'grey',
+        height:110,
+    },
+    container: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    title: {
+        fontSize: 40,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 30
+    },
+    button: {
+        borderWidth: 1,
+        padding: 10,
+        width: 150,
+        alignItems: 'center',
+        marginBottom: 10
+    },
+    buttonText: {
+        // textAlign: 'center'
+    }
+});
