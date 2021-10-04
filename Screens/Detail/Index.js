@@ -1,11 +1,13 @@
 import React,{Component} from 'react';
 import {View, SafeAreaView, Image, Text, StyleSheet,FlatList,Dimensions,TouchableOpacity,ScrollView} from 'react-native';
 const width =Dimensions.get("screen").width/2-30;
+const data = require('../Main-layout/GioHang.json');
 export default class DetailsScreen extends Component {
     constructor (props) {
         super(props);
         this.navigation = props.navigation;
         this.gotoNotify = this.gotoNotify.bind(this);
+        this.addCart=this.addCart.bind(this);
         this.state = {
             data: props.route.params,
             cong:0,
@@ -13,8 +15,14 @@ export default class DetailsScreen extends Component {
             dem:0,
         }
     }
+    addCart(){
+        data.carts.push({tonggia:0,Quantity:0,name : this.state.data.name,img : this.state.data.img,price : this.state.data.price});
+        console.log(data.carts);
+        console.log('--------------------------------------------');
+        this.navigation.navigate('GioHang');
+    }
     gotoNotify() {
-    this.navigation.navigate('Notify');
+    this.navigation.navigate('GioHang');
     }
     computetru(){
         if(this.state.dem > 0 ){
@@ -38,14 +46,14 @@ export default class DetailsScreen extends Component {
                                Back
                            </Text>
                       </View>
-                      <View style={{backgroundColor:'grey'}}>
+                      <View style={{backgroundColor:'pink'}}>
                         <Text style={{
                             width:50,
                             height:80,
                             marginLeft:30,
                             }} onPress={()=>this.gotoNotify()}>
                         <Image
-                            source={require('../Home/ThongBao_2.png')}
+                            source={require('../../Image/GioHang.png')}
                             style={{
                                 width:50,
                                 height:50,
@@ -95,35 +103,16 @@ export default class DetailsScreen extends Component {
                   </View>
                   <View style={{marginTop:20,flexDirection:'row',justifyContent:'space-between'}}>
                       <View style={{flexDirection:'row',alignItems:'center'}}>
-                          <View style={styles.borderBtn}>
-                              <Text style={styles.borderBtnText}onPress={this.computetru.bind(this)} >
-                                  -
-                              </Text>
-                          </View>
-                              <Text
-                                  style={{
-                                  fontSize: 20,
-                                  marginHorizontal: 10,
-                                  fontWeight: 'bold',
-                                  alignItems:'center'
-                                  }}>
-                              {this.state.dem}
-                              </Text>
-                              <View style={styles.borderBtn}>
-                                  <Text style={styles.borderBtnText} onPress={this.computecong.bind(this)}>+</Text>
-                              </View>
+                              
                           </View>
                           <View style={styles.buyBtn}>
-                          <Text
+                          <Text onPress={()=>this.addCart()}
                               style={{color: 'white', fontSize: 18, fontWeight: 'bold'}}>
                               Buy
                           </Text>
                       </View>
                       </View>
                   </View>
-                  <Text>
-                      DAY LA LIST KHAC
-                  </Text>
                   
               </SafeAreaView>
           </ScrollView>
@@ -206,7 +195,7 @@ const styles = StyleSheet.create({
         borderRadius:5,
         fontSize:20,
         fontWeight:'bold',
-        backgroundColor:'grey',
+        backgroundColor:'pink',
         alignItems:'center',
         justifyContent: 'center'
     },
@@ -214,7 +203,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:20,
         flexDirection:'row',
         justifyContent:'space-between',
-        backgroundColor:'grey'
+        backgroundColor:'pink'
     },
     container: {
         flex: 1,

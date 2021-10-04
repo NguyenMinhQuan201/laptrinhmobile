@@ -1,8 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import GioHang from '../Screens/Main-layout/GioHang';
 import TrangChu from '../Screens/Main-layout/TrangChu';
 import NgDung from '../Screens/Main-layout/NgDung';
+import Notify from '../Screens/Notify/Notify.js';
 import { StyleSheet,Text,View,Image,TouchableOpacity } from 'react-native';
 const Tab = createBottomTabNavigator();
 const Tabs =()=>{
@@ -38,21 +38,24 @@ const Tabs =()=>{
                 )
             }}
             />          
-            <Tab.Screen name="GioHang" component={GioHang}
+            <Tab.Screen name="Notify" component={Notify}
                 options={{headerShown:false,
                     tabBarIcon:({focused})=>(
-                        <View style={{alignItems:'center',justifyContent:'center'}}>
-                            <Image
-                                source={require('../Image/GioHang.png')}
-                                resizeMode='contain'
-                                style={{
-                                    width:55,
-                                    height:50,
-                                    
-                                }}
-                            />
-                            <Text style={{color:focused ? '#e32f45':'#748c94',fontSize:12}}
-                            >Giở Hàng</Text>
+                        <View style={{marginTop:10}}>
+                            <View style={{alignItems:'center',justifyContent:'center'}}>
+                                <Image
+                                    source={require('../Screens/Home/ThongBao_2.png')}
+                                    resizeMode='contain'
+                                    style={{
+                                        
+                                        width:40,
+                                        height:30,
+                                        backgroundColor:'white'
+                                    }}
+                                />
+                                <Text style={{marginTop:5,color:focused ? '#e32f45':'#748c94',fontSize:12}}
+                                >Thông Báo</Text>
+                            </View>
                         </View>
                     )
                 }}

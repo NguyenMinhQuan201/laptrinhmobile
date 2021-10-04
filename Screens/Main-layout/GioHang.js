@@ -10,89 +10,130 @@ import {
   FlatList,
 } from 'react-native';
 
-const data = require('./GioHang.json');
+var data = require('./GioHang.json');
 export default class GioHang extends Component {
   constructor(props) {
     super(props);
     this.navigation = props.navigation;
     this.backHome = this.backHome.bind(this);
+    this.computetru=this.computetru.bind(this)
+    this.computecong=this.computecong.bind(this)
+    this.deletecart=this.deletecart.bind(this);
     this.sum = this.sum.bind(this);
-    this.renderItem = this.renderItem.bind(this);
     this.state = {
-      data: data.carts,
+      data: props.route.params,
       id: 1,
       cong:0,
       tru:0,
       dem:0,
       tong: 0,
+      label:''
     };
   }
-
+  deletecart(name){
+    for(let i=0;i<data.carts.length;i++){
+        if(data.carts[i].name == name){
+          data.carts.pop(data.carts[i]);
+          console.log('xoa thang cong')
+      }
+    }
+    this.navigation.navigate('GioHang')
+    this.navigation.navigate('GioHang',data.carts)
+  }
   sum(){
     let tong = 0;
-    for (let i = 0; i < this.state.data.length; i++) {
-        tong = tong + (this.state.data[i].price * this.state.data[i].quantity)
+    for (let i = 0; i < data.carts.length; i++) {
+        tong = tong + data.carts[i].tonggia
         this.setState({tong:tong});
         console.log(tong);
     }
   }
-  computetru(){
-    for (let i = 0; i < this.state.data.length; i++) {
-      if (this.state.data[i].id === this.state.id) {
-        const dem = this.state.dem - 1;
-        this.setState({dem:dem});
-        console.log(dem);
+  computetru(name){
+    var giagoc=0;
+    for (let i = 0; i < data.carts.length; i++) {
+      giagoc=data.carts[i].price;
+      if (data.carts[i].name === name) {
+        if(data.carts[i].Quantity==1){
+          console.log('gioi han');
+        }else{
+          data.carts[i].Quantity=data.carts[i].Quantity-1;
+          data.carts[i].tonggia=data.carts[i].Quantity*giagoc;
+          console.log(data.carts[i].Quantity);
+        }
       }
     }
+    this.sum();
+    this.navigation.navigate('GioHang')
+    this.navigation.navigate('GioHang',data.carts)
   }
-  computecong(){
-    for (let i = 0; i < this.state.data.length; i++) {
-      if (this.state.data[i].id === this.state.id) {
-        const dem = this.state.dem + 1;
-        this.setState({dem:dem})
-        console.log(dem);
+  computecong(name){
+    var giagoc=0;
+    for (let i = 0; i < data.carts.length; i++) {
+      giagoc=data.carts[i].price;
+      if (data.carts[i].name === name) {
+        data.carts[i].Quantity=data.carts[i].Quantity+1;
+        data.carts[i].tonggia=data.carts[i].Quantity*giagoc;
+        console.log(data.carts[i].Quantity);
       }
     }
+    this.sum();
+    this.navigation.navigate('GioHang')
+    this.navigation.navigate('GioHang',data.carts)
+  }
+  compute(){
+
   }
   backHome() {
     this.navigation.goBack();
   }
-  renderItem({item, index}) {
-    return (
-      <View style={styles.cart}>
-        <View style={styles.img}>
-          <Image
-            style={{width: 115, height: 115, borderRadius: 20}}
-            source={{uri: item.image}}
-          />
-        </View>
-
-        <View style={styles.title}>
-          <Text style={{marginLeft: 10, fontSize: 16}}>{item.name}</Text>
-          <Text style={{marginLeft: 10}}>{item.category}</Text>
-
-          <View style={styles.quantity}>
-            <Text style={styles.textQuantity} onPress={this.computetru.bind(this)}>-</Text>
-            <Text style={styles.textQuantity}>{item.quantity}</Text>
-            <Text style={styles.textQuantity} onPress={this.computecong.bind(this)}>+</Text>
-          </View>
-        </View>
-        <View style={styles.price}>
-          <Text style={{fontSize: 16, color: 'red', textAlign: 'center'}}>
-            Price
-          </Text>
-          <Text>${item.price}</Text>
-          <Image
-            //style={styles.imgDetele}
-            style={{width: 30, height: 30}}
-            source={require('../../Image/delete.png')}
-          />
-        </View>
-
-      </View>
-    );
-  }
   render() {
+    const RenderItem=({cart})=> {
+      console.log(cart)
+      return (
+        <View style={styles.cart}>
+          <View style={styles.img}>
+            <Image
+              style={{width: 115, height: 115, borderRadius: 20}}
+              source={{uri: cart.img}}
+            />
+          </View>
+  
+          <View style={styles.title}>
+            <Text style={{marginLeft: 10, fontSize: 16}}>{cart.name}</Text>
+            <Text style={{marginLeft: 10}}></Text>
+  
+            <View style={styles.quantity}>
+              <Text style={styles.textQuantity} onPress={()=> this.computetru(cart.name)}>-</Text>
+              <Text style={styles.textQuantity}>{cart.Quantity}</Text>
+              <Text style={styles.textQuantity} onPress={()=> this.computecong(cart.name)}>+</Text>
+            </View>
+          </View>
+          <View style={styles.price}>
+            <Text style={{fontSize: 16, color: 'red', textAlign: 'center'}}>
+              Price
+            </Text>
+            <Text>${cart.tonggia}</Text>
+            <TouchableOpacity onPress={()=>this.deletecart(cart.name)} >
+              <Image
+                //style={styles.imgDetele}
+                style={{width: 30, height: 30}}
+                source={require('../../Image/delete.png')}
+              />
+            </TouchableOpacity>
+          </View>
+  
+        </View>
+      );
+    }
+    for(let i=0;i<data.carts.length-1;i++){
+      for(let j=i+1;j<data.carts.length;j++){
+        if(data.carts[i].name == data.carts[j].name){
+          data.carts.pop(data.carts[j]);
+          console.log('thang cong')
+        }
+      }
+    }
+    
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -111,17 +152,20 @@ export default class GioHang extends Component {
             />
           </View>
         </View>
-      
+      <View>
+        <Text>
+           {this.state.label}
+        </Text>
+        
+        
+      </View>
         <View style={styles.products}>
           <FlatList
             //style={styles.listNotify}
-            data={this.state.data}
-            renderItem={this.renderItem}
-            keyExtractor={item => item.id}
+            data={data.carts}
+            renderItem={({item}) => <RenderItem cart={item} />}
           />
-        </View>
-        
-        <Text style={{fontSize: 20, marginTop:25}}>Totals</Text>
+          <Text onPress={()=>this.sum()} style={{fontSize: 20, marginTop:25,color:'white'}}>Totals</Text>
         <View style={styles.bottom}>
         
             <View style={styles.leftBottom}>
@@ -136,6 +180,7 @@ export default class GioHang extends Component {
               </TouchableOpacity>
             </View>
         </View>
+        </View>
 
       </View>
     )
@@ -145,9 +190,10 @@ export default class GioHang extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: 'pink'
+    backgroundColor: 'purple'
     // justifyContent: 'center',
     // alignItems: 'center'
+    
   },
   header: {
     flexDirection: 'row',
@@ -227,22 +273,25 @@ const styles = StyleSheet.create({
     
   // },
   products: {
-
+    height:500,
   },
   bottom: {
-    flex: 1,
     flexDirection: 'row',
     marginTop: 5,
     marginLeft: 10,
     marginRight: 10,
+    height:100,
   },
   leftBottom: {
     flex: 1,
-    backgroundColor: 'pink'
+    backgroundColor: 'pink',
+    borderBottomLeftRadius:10,
+    borderTopLeftRadius:10
   },
   rightBottom: {
     flex: 1,
     backgroundColor: 'gray',
-   
+    borderBottomRightRadius:10,
+    borderTopRightRadius:10
   },
 });

@@ -20,7 +20,9 @@ export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.navigation = props.navigation;
+    
     this.gotoDetail = this.gotoDetail.bind(this);
+
     this.gotoNotify = this.gotoNotify.bind(this);
     this.refreshFlatList = this.refreshFlatList.bind(this);
     this.state = {
@@ -32,7 +34,7 @@ export default class HomeScreen extends Component {
     this.navigation.navigate('Detail', product);
  }
   gotoNotify() {
-    this.navigation.navigate('Notify');
+    this.navigation.navigate('GioHang');
   }
   findout(item) {
     console.log(item);
@@ -121,7 +123,9 @@ export default class HomeScreen extends Component {
                     marginLeft:30,
                     }} onPress={()=>this.gotoNotify()}>
                     <Image
-                        source={require('../Home/ThongBao_2.png')}
+                        source={require('../../Image/GioHang.png')}
+                        
+                        // source={require('../Home/ThongBao_2.png')}
                         style={{
                             width:50,
                             height:50,
