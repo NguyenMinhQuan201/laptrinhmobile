@@ -43,9 +43,9 @@ export default class DangNhap extends Component {
     }
     render() {
         return(
-            <View style={{backgroundColor:'pink'}}>
+            <View style={{backgroundColor:'#FF7979'}}>
                 <View style={styles.header}>
-                    <Text style={{textAlign:'center',fontSize:40,fontWeight:'bold'}}>
+                    <Text style={{textAlign:'center',fontSize:40,fontWeight:'bold', color: '#30336b'}}>
                         WelCome to LipStick.com
                     </Text>
                 </View>
@@ -83,7 +83,7 @@ export default class DangNhap extends Component {
 const styles = StyleSheet.create({
     header:{
         height:100,
-        backgroundColor:'pink',
+        backgroundColor:'#FF7979',
         
     },
     buttonstyle:{
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         margin:15,
         height:30,
         borderRadius:10,
-        backgroundColor:'pink',
+        backgroundColor:'#FF7979',
         width:100,
         alignItems:'center',
         padding:5
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
       flexDirection:'column',
       padding:20,
       borderRadius:15,
-      backgroundColor:'grey',
+      backgroundColor:'#B3EDF5',
       height:500
     },
     group: {

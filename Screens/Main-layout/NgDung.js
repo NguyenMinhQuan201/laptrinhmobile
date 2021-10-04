@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeND from '../NguoiDung/HomeND/HomeND';
 import DangKy from '../NguoiDung/DangKy/DangKy';
 import DangNhap from '../NguoiDung/DangNhap/DangNhap';
+import AboutUs from '../AboutUs';
 const Stack = createNativeStackNavigator();
 
 export default function NgDung() {
@@ -21,6 +22,10 @@ export default function NgDung() {
           name='DangNhap'
           component={DangNhap} options={{headerShown:false}}
         ></Stack.Screen>
-      </Stack.Navigator>      
+        <Stack.Screen
+          name='AboutUs'
+          component={AboutUs} options={{headerShown:false}}
+        ></Stack.Screen>
+      </Stack.Navigator>
   );
 }

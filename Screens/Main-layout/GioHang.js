@@ -30,20 +30,21 @@ export default class GioHang extends Component {
       label:''
     };
   }
+
   deletecart(name){
     for(let i=0;i<data.carts.length;i++){
-        if(data.carts[i].name == name){
-          data.carts.pop(data.carts[i]);
+      if(data.carts[i].name === name){
+          data.carts.splice(data.carts[i],1);
           console.log('xoa thang cong')
       }
     }
-    this.navigation.navigate('GioHang')
     this.navigation.navigate('GioHang',data.carts)
+    this.navigation.navigate('GioHang')
   }
   sum(){
     let tong = 0;
     for (let i = 0; i < data.carts.length; i++) {
-        tong = tong + data.carts[i].tonggia
+        tong = tong + data.carts[i].tonggia;
         this.setState({tong:tong});
         console.log(tong);
     }
@@ -99,8 +100,8 @@ export default class GioHang extends Component {
           </View>
   
           <View style={styles.title}>
-            <Text style={{marginLeft: 10, fontSize: 16}}>{cart.name}</Text>
-            <Text style={{marginLeft: 10}}></Text>
+            <Text style={{marginLeft: 10,marginTop:5, fontSize: 18, color:'#5B14F5'}}>{cart.name}</Text>
+            {/* <Text style={{marginLeft: 10}}></Text> */}
   
             <View style={styles.quantity}>
               <Text style={styles.textQuantity} onPress={()=> this.computetru(cart.name)}>-</Text>
@@ -109,10 +110,10 @@ export default class GioHang extends Component {
             </View>
           </View>
           <View style={styles.price}>
-            <Text style={{fontSize: 16, color: 'red', textAlign: 'center'}}>
+            <Text style={{fontSize: 16, color: '#5B14F5', textAlign: 'center'}}>
               Price
             </Text>
-            <Text>${cart.tonggia}</Text>
+            <Text style={{color:'#5B14F5'}}>${cart.tonggia.toFixed(2)}</Text>
             <TouchableOpacity onPress={()=>this.deletecart(cart.name)} >
               <Image
                 //style={styles.imgDetele}
@@ -138,12 +139,12 @@ export default class GioHang extends Component {
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerLeft}>
-            <Text style={{fontSize: 16}} onPress={this.backHome}>
+            <Text style={{fontSize: 16, color:'#30336b'}} onPress={this.backHome}>
               Back
             </Text>
           </View>
           <View style={styles.headerCenter}>
-            <Text style={{fontSize: 26}}>Your Cart</Text>
+            <Text style={{fontSize: 26, color:'#30336b'}}>Your Cart</Text>
           </View>
           <View style={styles.headerRight}>
             <Image
@@ -165,18 +166,18 @@ export default class GioHang extends Component {
             data={data.carts}
             renderItem={({item}) => <RenderItem cart={item} />}
           />
-          <Text onPress={()=>this.sum()} style={{fontSize: 20, marginTop:25,color:'white'}}>Totals</Text>
+          <Text onPress={()=>this.sum()} style={{fontSize: 20, marginLeft: 5,color:'#30336b'}}>Totals</Text>
         <View style={styles.bottom}>
         
             <View style={styles.leftBottom}>
-              <Text style={{fontSize: 14}}>Sub total:</Text>
-              <Text style={{fontSize: 14}}>Shipping:</Text>
+              <Text style={{fontSize: 16, color:'#30336b'}}>Sub total:</Text>
+              <Text style={{fontSize: 16, color:'#30336b'}}>Shipping:</Text>
             </View> 
             <View style={styles.rightBottom}>
-              <Text style={{fontSize: 14, paddingLeft: 60}}>{this.state.tong}</Text>
-              <Text style={{fontSize: 14, paddingLeft: 60}}>$0.00</Text>
+              <Text style={{fontSize: 16, paddingLeft: 60, color:'#30336b'}}>{this.state.tong.toFixed(2)}</Text>
+              <Text style={{fontSize: 16, paddingLeft: 60, color:'#30336b'}}>$0.00</Text>
               <TouchableOpacity style={styles.button} onPress={this.sum}>
-                <Text>Check Out</Text>
+                <Text style={{fontSize: 18, color:'#FFF', textAlign: 'center'}}>Check Out</Text>
               </TouchableOpacity>
             </View>
         </View>
@@ -190,14 +191,14 @@ export default class GioHang extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'purple'
+    backgroundColor: '#B3EDF5',
     // justifyContent: 'center',
     // alignItems: 'center'
     
   },
   header: {
     flexDirection: 'row',
-    backgroundColor: 'pink',
+    backgroundColor: '#FF7979',
     height: 80,
     borderBottomRightRadius: 20,
     borderBottomLeftRadius: 20,
@@ -219,52 +220,54 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'pink'
+    backgroundColor: '#FF7979'
   },
 
   cart: {
     marginTop: 30,
     flexDirection: 'row',
-    padding: 2,
-    borderWidth: 1,
-    borderColor: 'red',
-    borderBottomRightRadius: 20,
-    borderTopLeftRadius: 20,
-    backgroundColor: "#CC00FF",
+    // padding: 2,
+    // borderWidth: 1,
+    // borderColor: '#20F55C',
+    // borderBottomRightRadius: 20,
+    // borderTopLeftRadius: 20,
+    borderRadius: 20,
+    backgroundColor: "#64FA89",
   },
   img: {
-    flex: 2.5, 
+    flex: 2.7, 
     width: 124,
     height: 115,
     borderRadius: 20,
-    backgroundColor: 'grey',
-    marginLeft: 5,
+    //backgroundColor: 'grey',
+    //marginLeft: 5,
   },
   title: {
     flex: 5,
-    backgroundColor: 'yellow',
+    //backgroundColor: 'yellow',
     marginLeft: 5,
     marginRight: 5,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   quantity:{
     flexDirection: 'row',
-    backgroundColor: 'pink',
+    //backgroundColor: 'pink',
     width: 120,
     height: 30,
     alignItems: 'center',
     marginLeft: 20,
   },
   textQuantity: {
-    fontSize: 18,
+    fontSize: 20,
     width: 40,
     //height: 30,
     textAlign: 'center',
+    color: '#5B14F5',
   },
   price: {
-    flex: 1,
+    flex: 1.3,
     marginRight: 5,
-    backgroundColor: 'lightblue',
+    //backgroundColor: 'lightblue',
     alignItems: 'center',
     justifyContent: 'space-between'
   },
@@ -284,14 +287,22 @@ const styles = StyleSheet.create({
   },
   leftBottom: {
     flex: 1,
-    backgroundColor: 'pink',
+    backgroundColor: '#95afc0',
     borderBottomLeftRadius:10,
     borderTopLeftRadius:10
   },
   rightBottom: {
     flex: 1,
-    backgroundColor: 'gray',
+    backgroundColor: '#95afc0',
     borderBottomRightRadius:10,
     borderTopRightRadius:10
+  },
+  button: {
+    backgroundColor: '#FF7979',
+    height: 30,
+    marginLeft: 40, 
+    marginRight: 40, 
+    marginTop: 10,
+    borderRadius: 15,
   },
 });

@@ -16,7 +16,7 @@ export default class DetailsScreen extends Component {
         }
     }
     addCart(){
-        data.carts.push({tonggia:0,Quantity:0,name : this.state.data.name,img : this.state.data.img,price : this.state.data.price});
+        data.carts.push({tonggia: this.state.data.price,Quantity:1,name: this.state.data.name,img : this.state.data.img,price : this.state.data.price});
         console.log(data.carts);
         console.log('--------------------------------------------');
         this.navigation.navigate('GioHang');
@@ -24,29 +24,17 @@ export default class DetailsScreen extends Component {
     gotoNotify() {
     this.navigation.navigate('GioHang');
     }
-    computetru(){
-        if(this.state.dem > 0 ){
-        const dem=this.state.dem-1
-        this.setState({dem:dem});
-        console.log(dem);
-        }
-    }
-    computecong(){
-        const dem=this.state.dem+1
-        this.setState({dem:dem})
-        console.log(dem);
-    }
   render(){
           return(
               <ScrollView>
-                  <SafeAreaView style={{flex:1,backgroundColor:'purple'}}>
+                  <SafeAreaView style={{flex:1,backgroundColor:'#B3EDF5'}}>
                   <View style={styles.Header}>
                       <View style={styles.goback} >
                            <Text style={styles.textback} onPress={()=>this.navigation.navigate('Home')}>
                                Back
                            </Text>
                       </View>
-                      <View style={{backgroundColor:'pink'}}>
+                      <View style={{backgroundColor:'#FF7979'}}>
                         <Text style={{
                             width:50,
                             height:80,
@@ -64,7 +52,7 @@ export default class DetailsScreen extends Component {
                   <View style={styles.imageContainer}>
                       {/* <Image source={this.state.data.img} */}
                       <Image source={{uri:this.state.data.img}}
-                          style={{resizeMode:'contain',flex:1,height:400,width:400,}}
+                          style={{resizeMode:'contain',flex:1,height:400,width:400, borderRadius:20}}
                       />
                   </View>
                   
@@ -124,7 +112,7 @@ const styles = StyleSheet.create({
     buyBtn: {
         width: 130,
         height: 50,
-        backgroundColor:'pink',
+        backgroundColor:'#FF7979',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 30,
@@ -148,7 +136,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderTopLeftRadius: 25,
         borderBottomLeftRadius: 25,
-        backgroundColor:'pink'
+        backgroundColor:'#FF7979'
     },
     line:{
         width:25,
@@ -169,7 +157,7 @@ const styles = StyleSheet.create({
     },
     detailContainer:{
         flex:0.55,
-        backgroundColor:'grey',
+        backgroundColor:'#95afc0',
         marginHorizontal:7,
         marginBottom:7,
         borderRadius:20,
@@ -187,7 +175,7 @@ const styles = StyleSheet.create({
         marginTop:20,
         fontSize:20,
         fontWeight:'bold',
-
+        color:'#30336b'
     },
     goback:{
         width:50,
@@ -195,7 +183,7 @@ const styles = StyleSheet.create({
         borderRadius:5,
         fontSize:20,
         fontWeight:'bold',
-        backgroundColor:'pink',
+        backgroundColor:'#FF7979',
         alignItems:'center',
         justifyContent: 'center'
     },
@@ -203,7 +191,9 @@ const styles = StyleSheet.create({
         paddingHorizontal:20,
         flexDirection:'row',
         justifyContent:'space-between',
-        backgroundColor:'pink'
+        backgroundColor:'#FF7979',
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
     },
     container: {
         flex: 1,
