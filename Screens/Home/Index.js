@@ -58,6 +58,7 @@ export default class HomeScreen extends Component {
                     resizeMode: 'contain',
                     height: 200,
                     width: 100,
+                    borderRadius: 15,
                   }}
                   source={{uri: product.img}}/>
                                                 
@@ -67,12 +68,12 @@ export default class HomeScreen extends Component {
                 </Text>
                 <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:15}}>
                     <Text style={{fontSize:15,textAlign:'left',fontWeight:'bold',marginLeft:5}}>
-                        {product.price}
+                        ${product.price}
                     </Text>
                     <View style={{
                         height:25,
                         width: 25,
-                        backgroundColor:'purple',
+                        backgroundColor:'#FF7979',
                         borderRadius:5,
                         justifyContent:'center',
                         alignItems:'center',
@@ -93,13 +94,13 @@ export default class HomeScreen extends Component {
     );
 };
     return(           
-      <View style={{backgroundColor: 'purple', height: 600}}>
+      <View style={{backgroundColor: '#B3EDF5', height: 600}}>
         <View style={styles.header}>
-          <View style={{backgroundColor: 'grey', width: 300}}>
-                <Text style={{paddingLeft:30,fontSize:20,fontWeight:'bold',color:'pink'}}>
+          <View style={{backgroundColor: '#FF7979', width: 300}}>
+                <Text style={{paddingLeft:30,fontSize:20,fontWeight:'bold',color:'#30336b'}}>
                     Welcome to 
                 </Text>   
-                <Text style={{paddingLeft:20,fontSize:25,fontWeight:'bold',color:'pink'}}>
+                <Text style={{paddingLeft:20,fontSize:25,fontWeight:'bold',color:'#30336b'}}>
                     LipStickShop.com
                 </Text>        
                     
@@ -116,7 +117,7 @@ export default class HomeScreen extends Component {
                 </View>
             </View>
 
-            <View style={{backgroundColor:'grey'}} >
+            <View style={{backgroundColor:'#FF7979'}} >
                 <Text style={{
                     width:50,
                     height:80,
@@ -178,11 +179,11 @@ const styles = StyleSheet.create({
     marginLeft:30,
     marginRight:30,
     fontSize:20,
-    color:'white',
+    color:'#30336b',
   },
   swip:{
     justifyContent:'center',
-    backgroundColor:'pink',
+    backgroundColor:'#FF7979',
     margin:10,
     flexDirection:'row',
     borderRadius:10,
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
   header: { 
     flexDirection:'row',
     justifyContent:'space-between',
-    backgroundColor:'grey',
+    backgroundColor:'#FF7979',
     height:110,
   },
   container: {

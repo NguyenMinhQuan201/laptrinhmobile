@@ -46,12 +46,12 @@ export default class Notify extends Component {
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerLeft}>
-            <Text style={{fontSize: 16}} onPress={this.backHome}>
+            <Text style={{fontSize: 16, color: '#30336b'}} onPress={this.backHome}>
               Back
             </Text>
           </View>
           <View style={styles.headerCenter}>
-            <Text style={{fontSize: 26}}>Notification</Text>
+            <Text style={{fontSize: 26, color: '#30336b'}}>Notification</Text>
           </View>
           <View style={styles.headerRight}>
 
@@ -71,13 +71,13 @@ export default class Notify extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: 'pink'
+    backgroundColor: '#dff9fb'
     // justifyContent: 'center',
     // alignItems: 'center'
   },
   header: {
     flexDirection: 'row',
-    backgroundColor: 'pink',
+    backgroundColor: '#FF7979',
     height: 80,
     borderBottomRightRadius: 20,
     borderBottomLeftRadius: 20
