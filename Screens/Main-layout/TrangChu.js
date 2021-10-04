@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../Home/Index';
 import DetailScreen from '../Detail/Index';
 import NotifyScreen from '../Notify/Notify';
+import GioHang from '../Main-layout/GioHang';
 const Stack = createNativeStackNavigator();
 
 export default function TrangChu() {
@@ -20,6 +21,10 @@ export default function TrangChu() {
         <Stack.Screen
           name='Notify'
           component={NotifyScreen} options={{headerShown:false}}
+        ></Stack.Screen>
+        <Stack.Screen
+          name='GioHang'
+          component={GioHang} options={{headerShown:false}}
         ></Stack.Screen>
       </Stack.Navigator>      
   );
