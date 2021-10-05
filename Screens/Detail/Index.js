@@ -19,7 +19,7 @@ export default class DetailsScreen extends Component {
         data.carts.push({tonggia:0,Quantity:0,name : this.state.data.name,img : this.state.data.img,price : this.state.data.price});
         console.log(data.carts);
         console.log('--------------------------------------------');
-        this.navigation.navigate('GioHang');
+        this.navigation.navigate('GioHang',data.carts);
     }
     gotoNotify() {
     this.navigation.navigate('GioHang');

@@ -32,13 +32,13 @@ export default class GioHang extends Component {
   }
   deletecart(name){
     for(let i=0;i<data.carts.length;i++){
-        if(data.carts[i].name == name){
-          data.carts.pop(data.carts[i]);
+      if(data.carts[i].name === name){
+          data.carts.splice(data.carts[i],1);
           console.log('xoa thang cong')
       }
     }
-    this.navigation.navigate('GioHang')
     this.navigation.navigate('GioHang',data.carts)
+    this.navigation.navigate('GioHang')
   }
   sum(){
     let tong = 0;
@@ -88,7 +88,7 @@ export default class GioHang extends Component {
   }
   render() {
     const RenderItem=({cart})=> {
-      console.log(cart)
+      
       return (
         <View style={styles.cart}>
           <View style={styles.img}>
