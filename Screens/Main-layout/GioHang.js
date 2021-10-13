@@ -15,6 +15,7 @@ export default class GioHang extends Component {
   constructor(props) {
     super(props);
     this.navigation = props.navigation;
+    this.goToVoucher = this.goToVoucher.bind(this);
     this.backHome = this.backHome.bind(this);
     this.computetru=this.computetru.bind(this)
     this.computecong=this.computecong.bind(this)
@@ -34,8 +35,8 @@ export default class GioHang extends Component {
   deletecart(name){
     for(let i=0;i<data.carts.length;i++){
       if(data.carts[i].name === name){
-          data.carts.splice(data.carts[i],1);
-          console.log('xoa thang cong')
+        data.carts.splice(i,1);
+        console.log('xoa thang cong')
       }
     }
     this.navigation.navigate('GioHang',data.carts)
@@ -81,8 +82,9 @@ export default class GioHang extends Component {
     this.navigation.navigate('GioHang')
     this.navigation.navigate('GioHang',data.carts)
   }
-  compute(){
 
+  goToVoucher() {
+    this.navigation.navigate('Voucher');
   }
   backHome() {
     this.navigation.goBack();
@@ -122,7 +124,6 @@ export default class GioHang extends Component {
               />
             </TouchableOpacity>
           </View>
-  
         </View>
       );
     }
@@ -167,20 +168,26 @@ export default class GioHang extends Component {
             renderItem={({item}) => <RenderItem cart={item} />}
           />
           <Text onPress={()=>this.sum()} style={{fontSize: 20, marginLeft: 5,color:'#30336b'}}>Totals</Text>
-        <View style={styles.bottom}>
-        
+          <View style={styles.bottom}>
             <View style={styles.leftBottom}>
-              <Text style={{fontSize: 16, color:'#30336b'}}>Sub total:</Text>
+              <Text style={{fontSize: 16, color:'#30336b'}}>Total Amount:</Text>
+              <Text style={{fontSize: 16, color:'#30336b'}}>Voucher:</Text>
               <Text style={{fontSize: 16, color:'#30336b'}}>Shipping:</Text>
+              <Text style={{fontSize: 16, color:'#30336b'}}>Total Payment:</Text>
+              <TouchableOpacity style={styles.button} >
+                <Text style={{fontSize: 18, color:'#FFF', textAlign: 'center'}} onPress={this.goToVoucher}>Voucher</Text>
+              </TouchableOpacity>
             </View> 
             <View style={styles.rightBottom}>
+              <Text style={{fontSize: 16, paddingLeft: 60, color:'#30336b'}}>0.00</Text>
+              <Text style={{fontSize: 16, paddingLeft: 60, color:'#30336b'}}>......</Text>
+              <Text style={{fontSize: 16, paddingLeft: 60, color:'#30336b'}}>0.00</Text>
               <Text style={{fontSize: 16, paddingLeft: 60, color:'#30336b'}}>{this.state.tong.toFixed(2)}</Text>
-              <Text style={{fontSize: 16, paddingLeft: 60, color:'#30336b'}}>$0.00</Text>
               <TouchableOpacity style={styles.button} onPress={this.sum}>
                 <Text style={{fontSize: 18, color:'#FFF', textAlign: 'center'}}>Check Out</Text>
               </TouchableOpacity>
             </View>
-        </View>
+          </View>
         </View>
 
       </View>
@@ -220,7 +227,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FF7979'
+    backgroundColor: '#FF7979',
+    borderBottomRightRadius: 20,
   },
 
   cart: {
@@ -283,7 +291,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 10,
     marginRight: 10,
-    height:100,
+    height:150,
   },
   leftBottom: {
     flex: 1,

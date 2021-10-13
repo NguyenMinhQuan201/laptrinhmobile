@@ -4,6 +4,8 @@ import HomeScreen from '../Home/Index';
 import DetailScreen from '../Detail/Index';
 import NotifyScreen from '../Notify/Notify';
 import GioHang from '../Main-layout/GioHang';
+import Voucher from '../Voucher';
+
 const Stack = createNativeStackNavigator();
 
 export default function TrangChu() {
@@ -26,6 +28,10 @@ export default function TrangChu() {
           name='GioHang'
           component={GioHang} options={{headerShown:false}}
         ></Stack.Screen>
-      </Stack.Navigator>      
+        <Stack.Screen
+          name='Voucher'
+          component={Voucher} options={{headerShown:false}}
+        ></Stack.Screen>
+      </Stack.Navigator>
   );
 }
