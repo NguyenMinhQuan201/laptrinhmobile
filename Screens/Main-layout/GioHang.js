@@ -9,7 +9,7 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-
+var voucherused = require('../Voucher/voucher-used.json');
 var data = require('./GioHang.json');
 export default class GioHang extends Component {
   constructor(props) {
@@ -30,6 +30,7 @@ export default class GioHang extends Component {
       tong: 0,
       label:''
     };
+    console.log(this.state.data);
   }
 
   deletecart(name){
@@ -47,8 +48,17 @@ export default class GioHang extends Component {
     for (let i = 0; i < data.carts.length; i++) {
         tong = tong + data.carts[i].tonggia;
         this.setState({tong:tong});
-        console.log(tong);
     }
+    console.log(tong);
+    if(voucherused.voucherused[0]!=null){
+      tong=tong-voucherused.voucherused[0].discount;
+      if(voucherused.voucherused[0].discount>tong){
+        tong=0;
+        this.setState({tong:tong});
+      }
+      this.setState({tong:tong})
+    }
+
   }
   computetru(name){
     var giagoc=0;
@@ -167,7 +177,7 @@ export default class GioHang extends Component {
             data={data.carts}
             renderItem={({item}) => <RenderItem cart={item} />}
           />
-          <Text onPress={()=>this.sum()} style={{fontSize: 20, marginLeft: 5,color:'#30336b'}}>Totals</Text>
+          <Text style={{fontSize: 20, marginLeft: 5,color:'#30336b'}}>Totals</Text>
           <View style={styles.bottom}>
             <View style={styles.leftBottom}>
               <Text style={{fontSize: 16, color:'#30336b'}}>Total Amount:</Text>

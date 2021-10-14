@@ -9,44 +9,55 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-
+var voucherused = require('../Voucher/voucher-used.json');
 var data = require('./voucher.json');
 
 export default class Voucher extends Component {
   constructor(props) {
     super(props);
     this.navigation = props.navigation;
+    this.getVoucher=this.getVoucher.bind(this)
     this.backHome = this.backHome.bind(this);
     this.state = {
       data: data.vouchers,
     };
+
   }
   backHome() {
     this.navigation.goBack();
   }
-
-  renderItem({item, index}) {
-    return (
-      <TouchableOpacity style={styles.button}>
-        <View style={styles.imageVoucher}>
-          <Image
-            style={{width: 50, height: 50}}
-            source={require('../../Image/gift-card.png')}
-          />
-        </View>
-
-        <View style={styles.titleVoucher}>
-          <Text style={styles.textButton}>{item.name}</Text>
-        </View>
-        {/* <View style={styles.viewMore}>
-          <Text style={styles.textViewMore}>{'>'}</Text>
-        </View> */}
-      </TouchableOpacity>
-    );
+  getVoucher(voucher){
+    console.log(voucher.discount);
+    if(voucherused.voucherused.length>=0){
+      voucherused.voucherused.pop();
+      voucherused.voucherused.shift();
+    }
+    voucherused.voucherused.push({discount : voucher.discount});
+    this.navigation.navigate('GioHang');
+    console.log(voucherused.voucherused[0].discount);
   }
 
 
   render(){
+    const OnclickgetVoucher=({vouchers})=>{
+      return (
+        <TouchableOpacity style={styles.button} onPress={()=>this.getVoucher(vouchers)} >
+          <View style={styles.imageVoucher}>
+            <Image
+              style={{width: 50, height: 50}}
+              source={require('../../Image/gift-card.png')}
+            />
+          </View>
+  
+          <View style={styles.titleVoucher}>
+            <Text style={styles.textButton}>{vouchers.name}</Text>
+          </View>
+          {/* <View style={styles.viewMore}>
+            <Text style={styles.textViewMore}>{'>'}</Text>
+          </View> */}
+        </TouchableOpacity>
+      );
+    }
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -63,7 +74,7 @@ export default class Voucher extends Component {
         <FlatList
           style={styles.listVoucher}
           data={this.state.data}
-          renderItem={this.renderItem}
+          renderItem={({item}) => <OnclickgetVoucher vouchers={item} />}
           keyExtractor={item => item.id}
         />
       </View>
