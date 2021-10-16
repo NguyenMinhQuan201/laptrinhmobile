@@ -9,18 +9,21 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-var voucherused = require('../Voucher/voucher-used.json');
-var data = require('./GioHang.json');
+const voucherused = require('../Voucher/voucher-used.json');
+const data = require('./GioHang.json');
 export default class GioHang extends Component {
   constructor(props) {
     super(props);
     this.navigation = props.navigation;
     this.goToVoucher = this.goToVoucher.bind(this);
     this.backHome = this.backHome.bind(this);
-    this.computetru=this.computetru.bind(this)
-    this.computecong=this.computecong.bind(this)
-    this.deletecart=this.deletecart.bind(this);
+    this.computetru = this.computetru.bind(this);
+    this.computecong = this.computecong.bind(this);
+    this.deletecart = this.deletecart.bind(this);
+    this.deletevoucher = this.deletevoucher.bind(this);
+    //this.reloadVoucher = this.reloadVoucher.bind(this);
     this.sum = this.sum.bind(this);
+    this.sumamount = this.sumamount.bind(this);
     this.state = {
       data: props.route.params,
       id: 1,
@@ -28,71 +31,98 @@ export default class GioHang extends Component {
       tru:0,
       dem:0,
       tong: 0,
-      label:''
+      totalamount: 0,
+      discountt: 0,
     };
     console.log(this.state.data);
   }
 
   deletecart(name){
-    for(let i=0;i<data.carts.length;i++){
-      if(data.carts[i].name === name){
+    for (let i = 0; i < data.carts.length; i++) {
+      if (data.carts[i].name === name) {
         data.carts.splice(i,1);
         console.log('xoa thang cong')
       }
     }
-    this.navigation.navigate('GioHang',data.carts)
+    this.navigation.navigate('GioHang', data.carts);
     this.navigation.navigate('GioHang')
+  }
+  deletevoucher(){
+    if (voucherused.voucherused.length >= 0) {
+      voucherused.voucherused.pop();
+      voucherused.voucherused.shift();
+    }
+    this.setState({discountt: 0});
+  }
+  // reloadVoucher(){
+  //   if (voucherused.voucherused[0] != null) {
+  //     this.setState({discountt: voucherused.voucherused[0].discount});
+  //   } else {
+  //     this.setState({discountt: 0});
+  //   }
+  // }
+  sumamount(){
+    let tong = 0;
+    for (let i = 0; i < data.carts.length; i++) {
+      tong = tong + data.carts[i].tonggia;
+      this.setState({totalamount: tong});
+    }
   }
   sum(){
     let tong = 0;
     for (let i = 0; i < data.carts.length; i++) {
-        tong = tong + data.carts[i].tonggia;
-        this.setState({tong:tong});
+      tong = tong + data.carts[i].tonggia;
+      this.setState({tong: tong});
+      this.setState({totalamount: tong});
     }
     console.log(tong);
-    if(voucherused.voucherused[0]!=null){
-      tong=tong-voucherused.voucherused[0].discount;
-      if(voucherused.voucherused[0].discount>tong){
-        tong=0;
-        this.setState({tong:tong});
+    if (voucherused.voucherused[0] != null) {
+      this.setState({discountt: voucherused.voucherused[0].discount});
+      if (voucherused.voucherused[0].discount > tong) {
+        tong = 0;
+        this.setState({tong: tong});
+      } else {
+        tong = tong - voucherused.voucherused[0].discount;
+        this.setState({tong: tong})
       }
-      this.setState({tong:tong})
     }
 
   }
   computetru(name){
     var giagoc=0;
     for (let i = 0; i < data.carts.length; i++) {
-      giagoc=data.carts[i].price;
+      giagoc = data.carts[i].price;
       if (data.carts[i].name === name) {
-        if(data.carts[i].Quantity==1){
+        if (data.carts[i].Quantity == 1) {
           console.log('gioi han');
-        }else{
-          data.carts[i].Quantity=data.carts[i].Quantity-1;
-          data.carts[i].tonggia=data.carts[i].Quantity*giagoc;
+        } else {
+          data.carts[i].Quantity = data.carts[i].Quantity - 1;
+          data.carts[i].tonggia = data.carts[i].Quantity * giagoc;
           console.log(data.carts[i].Quantity);
         }
       }
+      this.setState({totalamount: giagoc});
     }
-    this.sum();
+    this.sumamount();
     this.navigation.navigate('GioHang')
-    this.navigation.navigate('GioHang',data.carts)
+    this.navigation.navigate('GioHang', data.carts)
   }
   computecong(name){
     var giagoc=0;
     for (let i = 0; i < data.carts.length; i++) {
-      giagoc=data.carts[i].price;
+      giagoc = data.carts[i].price;
       if (data.carts[i].name === name) {
-        data.carts[i].Quantity=data.carts[i].Quantity+1;
-        data.carts[i].tonggia=data.carts[i].Quantity*giagoc;
+        data.carts[i].Quantity = data.carts[i].Quantity + 1;
+        data.carts[i].tonggia = data.carts[i].Quantity * giagoc;
         console.log(data.carts[i].Quantity);
       }
+      this.setState({totalamount: giagoc});
     }
-    this.sum();
+    this.sumamount();
     this.navigation.navigate('GioHang')
-    this.navigation.navigate('GioHang',data.carts)
+    this.navigation.navigate('GioHang', data.carts)
   }
-
+  
   goToVoucher() {
     this.navigation.navigate('Voucher');
   }
@@ -100,7 +130,7 @@ export default class GioHang extends Component {
     this.navigation.goBack();
   }
   render() {
-    const RenderItem=({cart})=> {
+    const RenderItem = ({cart}) => {
       console.log(cart)
       return (
         <View style={styles.cart}>
@@ -137,14 +167,22 @@ export default class GioHang extends Component {
         </View>
       );
     }
-    for(let i=0;i<data.carts.length-1;i++){
-      for(let j=i+1;j<data.carts.length;j++){
-        if(data.carts[i].name == data.carts[j].name){
+    for (let i = 0; i < data.carts.length - 1; i++) {
+      for (let j = i + 1; j < data.carts.length; j++) {
+        if (data.carts[i].name == data.carts[j].name) {
           data.carts.pop(data.carts[j]);
           console.log('thang cong')
         }
       }
     }
+
+    // if (voucherused.voucherused.length == 1) {
+    //   if (voucherused.voucherused[0].discount != this.state.discountt) {
+    //     this.setState({discountt: voucherused.voucherused[0].discount});
+    //   } 
+    // } else {
+    //   this.setState({discountt: 0});
+    // }
     
     return (
       <View style={styles.container}>
@@ -164,13 +202,6 @@ export default class GioHang extends Component {
             />
           </View>
         </View>
-      <View>
-        <Text>
-           {this.state.label}
-        </Text>
-        
-        
-      </View>
         <View style={styles.products}>
           <FlatList
             //style={styles.listNotify}
@@ -184,15 +215,20 @@ export default class GioHang extends Component {
               <Text style={{fontSize: 16, color:'#30336b'}}>Voucher:</Text>
               <Text style={{fontSize: 16, color:'#30336b'}}>Shipping:</Text>
               <Text style={{fontSize: 16, color:'#30336b'}}>Total Payment:</Text>
-              <TouchableOpacity style={styles.button} >
+              <TouchableOpacity style={styles.button}>
                 <Text style={{fontSize: 18, color:'#FFF', textAlign: 'center'}} onPress={this.goToVoucher}>Voucher</Text>
               </TouchableOpacity>
             </View> 
             <View style={styles.rightBottom}>
-              <Text style={{fontSize: 16, paddingLeft: 60, color:'#30336b'}}>0.00</Text>
-              <Text style={{fontSize: 16, paddingLeft: 60, color:'#30336b'}}>......</Text>
-              <Text style={{fontSize: 16, paddingLeft: 60, color:'#30336b'}}>0.00</Text>
-              <Text style={{fontSize: 16, paddingLeft: 60, color:'#30336b'}}>{this.state.tong.toFixed(2)}</Text>
+              <Text style={{fontSize: 16, paddingLeft: 40, color:'#30336b'}}>$ {this.state.totalamount.toFixed(2)}</Text>
+              <View style={{flexDirection:'row'}}>
+                <Text style={{fontSize: 16, paddingLeft: 40, color:'#30336b'}}>$ {this.state.discountt}</Text>
+                <TouchableOpacity onPress={this.deletevoucher}>
+                  <Text style={{fontSize: 14, paddingLeft: 26, color:'#30336b'}}>Del Voucher</Text>
+                </TouchableOpacity>
+              </View>
+              <Text style={{fontSize: 16, paddingLeft: 40, color:'#30336b'}}>$ 0.00</Text>
+              <Text style={{fontSize: 16, paddingLeft: 40, color:'#30336b'}}>$ {this.state.tong.toFixed(2)}</Text>
               <TouchableOpacity style={styles.button} onPress={this.sum}>
                 <Text style={{fontSize: 18, color:'#FFF', textAlign: 'center'}}>Check Out</Text>
               </TouchableOpacity>
@@ -211,7 +247,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#B3EDF5',
     // justifyContent: 'center',
     // alignItems: 'center'
-    
   },
   header: {
     flexDirection: 'row',
@@ -311,7 +346,7 @@ const styles = StyleSheet.create({
   },
   rightBottom: {
     flex: 1,
-    backgroundColor: '#95afc0',
+    backgroundColor: '#95a5c0',
     borderBottomRightRadius:10,
     borderTopRightRadius:10
   },
