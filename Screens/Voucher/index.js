@@ -9,14 +9,14 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-var voucherused = require('../Voucher/voucher-used.json');
-var data = require('./voucher.json');
+const voucherused = require('../Voucher/voucher-used.json');
+const data = require('./voucher.json');
 
 export default class Voucher extends Component {
   constructor(props) {
     super(props);
     this.navigation = props.navigation;
-    this.getVoucher=this.getVoucher.bind(this)
+    this.getVoucher = this.getVoucher.bind(this);
     this.backHome = this.backHome.bind(this);
     this.state = {
       data: data.vouchers,
@@ -28,11 +28,11 @@ export default class Voucher extends Component {
   }
   getVoucher(voucher){
     console.log(voucher.discount);
-    if(voucherused.voucherused.length>=0){
+    if (voucherused.voucherused.length >= 0) {
       voucherused.voucherused.pop();
       voucherused.voucherused.shift();
     }
-    voucherused.voucherused.push({discount : voucher.discount});
+    voucherused.voucherused.push({discount: voucher.discount});
     this.navigation.navigate('GioHang');
     console.log(voucherused.voucherused[0].discount);
   }
@@ -124,16 +124,24 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginTop:10,
     flexDirection: 'row',
+    borderRadius: 16,
+    backgroundColor: '#64FA89',
   },
   textButton: {
-    fontSize: 14,
+    fontSize: 16,
+    color: '#30336b',
+    //textAlign: 'right'
     //textAlign: 'center',
   },
   imageVoucher: {
-    flex: 2
+    flex: 1,
+    marginLeft: 10,
+    //backgroundColor: '#64FA89'
   },
   titleVoucher: {
-    flex: 10,
+    //flex: 13,
+    flex: 2.6,
+    //backgroundColor: '#F89'
   },
   listVoucher: {
     //backgroundColor: 'white'
