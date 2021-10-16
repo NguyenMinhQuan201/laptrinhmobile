@@ -33,8 +33,8 @@ export default class Voucher extends Component {
       voucherused.voucherused.shift();
     }
     voucherused.voucherused.push({discount: voucher.discount});
+    this.navigation.navigate('GioHang',voucher);
     this.navigation.navigate('GioHang');
-    console.log(voucherused.voucherused[0].discount);
   }
 
 

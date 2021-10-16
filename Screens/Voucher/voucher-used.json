@@ -1,5 +1,7 @@
 {
     "voucherused":[
-        
+        {
+            "discount": 0
+        }
     ]
 }

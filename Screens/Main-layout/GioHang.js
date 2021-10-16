@@ -33,6 +33,7 @@ export default class GioHang extends Component {
       tong: 0,
       totalamount: 0,
       discountt: 0,
+      temp:0
     };
     console.log(this.state.data);
   }
@@ -49,10 +50,8 @@ export default class GioHang extends Component {
   }
   deletevoucher(){
     if (voucherused.voucherused.length >= 0) {
-      voucherused.voucherused.pop();
-      voucherused.voucherused.shift();
+      voucherused.voucherused[0].discount=0;
     }
-    this.setState({discountt: 0});
   }
   // reloadVoucher(){
   //   if (voucherused.voucherused[0] != null) {
@@ -175,15 +174,6 @@ export default class GioHang extends Component {
         }
       }
     }
-
-    // if (voucherused.voucherused.length == 1) {
-    //   if (voucherused.voucherused[0].discount != this.state.discountt) {
-    //     this.setState({discountt: voucherused.voucherused[0].discount});
-    //   } 
-    // } else {
-    //   this.setState({discountt: 0});
-    // }
-    
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -222,7 +212,7 @@ export default class GioHang extends Component {
             <View style={styles.rightBottom}>
               <Text style={{fontSize: 16, paddingLeft: 40, color:'#30336b'}}>$ {this.state.totalamount.toFixed(2)}</Text>
               <View style={{flexDirection:'row'}}>
-                <Text style={{fontSize: 16, paddingLeft: 40, color:'#30336b'}}>$ {this.state.discountt}</Text>
+                <Text style={{fontSize: 16, paddingLeft: 40, color:'#30336b'}}>$ {voucherused.voucherused[0].discount}</Text>
                 <TouchableOpacity onPress={this.deletevoucher}>
                   <Text style={{fontSize: 14, paddingLeft: 26, color:'#30336b'}}>Del Voucher</Text>
                 </TouchableOpacity>
